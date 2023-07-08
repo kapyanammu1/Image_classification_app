@@ -1,0 +1,73 @@
+</html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 30%;
+    }
+  
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 2px solid black;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      text-align: center;
+    }
+  </style>
+<head>
+  <meta charset="utf-8">
+  <title>Image Classifier App</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!-- Latest compiled JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+  <nav class="row" style="background: grey; color: white;">
+    <div align="center"><h1 class="col-md-3 text-center">Classify Image</h1></div>
+  </nav>
+  <br />
+  <br />
+  <center class="row">
+    <form method="post" enctype="multipart/form-data" class="col-md-6 col-md-offset-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="form-control btn btn-default" type="submit">Classify Image</button>
+    </form>
+  </center>
+  <center>
+    <div class="row">
+      {% if image %}
+      <h2>Classification Results</h2>
+      <img src="{{ image.image.url }}" style="max-width: 500px; max-height: 500px;" alt="Uploaded Image">
+      <table>
+        <thead>
+          <tr>
+            <th>Classified image</th>
+            <th>Probability</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for label, probability in classification %}
+            <tr>
+              <td>{{ label }}</td>
+              <td>{{ probability }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+    
+  </body>
+  </center>
+</html>
